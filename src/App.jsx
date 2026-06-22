@@ -501,8 +501,8 @@ function MemoryAssistantPage() {
 
 function DashboardPage() {
   return (
-    <main className="page-container">
-      <div className="page-content">
+    <main className="page-container dashboard-page">
+      <div className="page-content" style={{padding: 0, maxWidth: '100%'}}>
         <Dashboard />
       </div>
     </main>
