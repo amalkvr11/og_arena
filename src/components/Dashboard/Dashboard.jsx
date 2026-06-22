@@ -5,11 +5,19 @@ import { getStorageStats, getNetworkStatus, getAllMemories } from '../../utils/s
 import { sampleMemories, sampleTimeCapsules, sampleBeneficiaries, networkStats } from '../../utils/sampleData'
 import { StatsCard, ActivityItem, ProgressBar, NetworkIndicator, AnimatedCounter } from './DashboardStats'
 
+const SkeletonCard = () => (
+  <div className="dashboard-card skeleton" style={{ height: '120px', background: 'rgba(255,255,255,0.05)', borderRadius: '16px' }}>
+    <div className="skeleton skeleton-text medium" style={{ marginTop: '20px', marginLeft: '20px', width: '60%' }}></div>
+    <div className="skeleton skeleton-text short" style={{ marginLeft: '20px', width: '40%' }}></div>
+  </div>
+)
+
 export const Dashboard = () => {
-  const { account, isConnected, network } = useWeb3()
+  const { account, isConnected, network, balance, walletType, getExplorerUrl, getStorageExplorerUrl } = useWeb3()
   const [stats, setStats] = useState(null)
   const [networkData, setNetworkData] = useState(null)
   const [recentActivity, setRecentActivity] = useState([])
+  const [uploadHistory, setUploadHistory] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
@@ -17,17 +25,18 @@ export const Dashboard = () => {
       setIsLoading(true)
       
       try {
-        const [storageStats, netStatus] = await Promise.all([
+        const [storageStats, netStatus, memories] = await Promise.all([
           getStorageStats(),
-          getNetworkStatus()
+          getNetworkStatus(),
+          getAllMemories()
         ])
         
         setStats(storageStats)
         setNetworkData(netStatus)
         
-        const memories = await getAllMemories()
         const activities = generateActivityFeed(memories)
         setRecentActivity(activities)
+        setUploadHistory(memories ? memories.slice(-5).reverse() : [])
       } catch (e) {
         console.error('Failed to load dashboard:', e)
         setStats(networkStats)
@@ -67,17 +76,20 @@ export const Dashboard = () => {
     return activity.slice(0, 8)
   }
 
+  const totalMemories = stats?.totalMemories || uploadHistory.length || sampleMemories.length
+  const totalMB = stats?.totalMB || (stats?.totalBytes ? (stats.totalBytes / (1024 * 1024)).toFixed(2) : '1.2')
+
   const dashboardStats = [
     { 
       icon: '📦', 
-      value: stats?.totalMemories || sampleMemories.length, 
+      value: totalMemories, 
       label: 'Memories Stored',
       trend: '+12%',
       trendDirection: 'up'
     },
     { 
       icon: '📊', 
-      value: `${stats?.totalMB || '1.2'} MB`, 
+      value: `${totalMB} MB`, 
       label: 'Total on 0G',
       trend: '+8%',
       trendDirection: 'up'
@@ -124,6 +136,10 @@ export const Dashboard = () => {
             <span className="wallet-label-text">Connected to {network?.name}</span>
             <span className="wallet-address-text">{account.slice(0, 6)}...{account.slice(-4)}</span>
           </div>
+          <div className="real-balance">
+            <span className="balance-icon">💎</span>
+            <span className="balance-amount">{balance || '0'} 0G</span>
+          </div>
           <Link to="/smart-contracts" className="view-contracts-btn">
             View Contract
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -134,13 +150,22 @@ export const Dashboard = () => {
       )}
 
       <div className="stats-grid">
-        {dashboardStats.map((stat, index) => (
-          <StatsCard 
-            key={index}
-            {...stat}
-            index={index}
-          />
-        ))}
+        {isLoading ? (
+          <>
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+          </>
+        ) : (
+          dashboardStats.map((stat, index) => (
+            <StatsCard 
+              key={index}
+              {...stat}
+              index={index}
+            />
+          ))
+        )}
       </div>
 
       {stats && (
@@ -168,7 +193,13 @@ export const Dashboard = () => {
             <Link to="/memory-vault" className="see-all-link">See All</Link>
           </div>
           <div className="activity-list">
-            {recentActivity.length > 0 ? (
+            {isLoading ? (
+              <>
+                <div className="skeleton skeleton-text medium"></div>
+                <div className="skeleton skeleton-text short"></div>
+                <div className="skeleton skeleton-text medium"></div>
+              </>
+            ) : recentActivity.length > 0 ? (
               recentActivity.map((item, i) => (
                 <ActivityItem key={i} {...item} />
               ))
@@ -207,10 +238,54 @@ export const Dashboard = () => {
 
         <div className="dashboard-card network-card">
           <div className="card-header">
+            <h3>Upload History</h3>
+            <Link to="/memory-vault" className="see-all-link">View All</Link>
+          </div>
+          <div className="upload-history-list">
+            {isLoading ? (
+              <>
+                <div className="skeleton skeleton-text medium"></div>
+                <div className="skeleton skeleton-text short"></div>
+              </>
+            ) : uploadHistory.length > 0 ? (
+              uploadHistory.map((item, i) => (
+                <div key={i} className="upload-history-card">
+                  <div className="upload-history-icon">📦</div>
+                  <div className="upload-history-info">
+                    <div className="upload-history-title">
+                      {item.title || `Memory #${uploadHistory.length - i}`}
+                    </div>
+                    <div className="upload-history-meta">
+                      {new Date(item.uploadedAt).toLocaleDateString()} • 
+                      {item.size ? ` ${(item.size/1024).toFixed(1)} KB` : ' Stored'}
+                    </div>
+                  </div>
+                  {item.txHash && getExplorerUrl && (
+                    <a 
+                      href={getExplorerUrl(item.txHash)} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="upload-history-link"
+                    >
+                      View →
+                    </a>
+                  )}
+                </div>
+              ))
+            ) : (
+              <p style={{ color: 'rgba(255,255,255,0.5)', textAlign: 'center' }}>
+                No uploads yet. Store your first memory!
+              </p>
+            )}
+          </div>
+        </div>
+
+        <div className="dashboard-card network-card" style={{ gridColumn: 'span 1' }}>
+          <div className="card-header">
             <h3>0G Network Status</h3>
             <span className={`status-badge ${networkData?.status || 'operational'}`}>
-                  {networkData?.status || 'Operational'}
-                </span>
+              {networkData?.status || 'Operational'}
+            </span>
           </div>
           <div className="network-stats-grid">
             <div className="network-stat">

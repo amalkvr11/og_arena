@@ -1,11 +1,13 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import { useWeb3 } from "../contexts/Web3Context"
+import { useToast } from "./Layout/Toast"
 import { uploadToOGStorage, downloadFromOGStorage, getNetworkInfo } from "../utils/ogStorage"
 import { uploadToMockStorage, downloadFromMockStorage } from "../utils/storageMetrics"
 
 export const MemoryUpload = () => {
   const { account, isConnected, walletType, signer, isCorrectNetwork, switchToOGNetwork, balance, network, getExplorerUrl, getStorageExplorerUrl } = useWeb3()
+  const toast = useToast()
   
   const [memory, setMemory] = useState("")
   const [isUploading, setIsUploading] = useState(false)
@@ -16,6 +18,7 @@ export const MemoryUpload = () => {
   const [downloadResult, setDownloadResult] = useState(null)
   const [error, setError] = useState(null)
   const [uploadedFileHash, setUploadedFileHash] = useState("")
+  const [shareLink, setShareLink] = useState("")
 
   const handleUpload = async () => {
     if (!memory.trim()) {
@@ -63,10 +66,13 @@ export const MemoryUpload = () => {
           })
           setUploadedFileHash(result.rootHash)
           setUploadStatus("Upload complete!")
+          setShareLink(`${window.location.origin}/memory-vault?hash=${result.rootHash}`)
+          toast?.success("Memory uploaded to 0G successfully!")
           localStorage.setItem("lastMemoryHash", result.rootHash)
           localStorage.setItem("lastMemoryTxHash", result.txHash)
         } else {
           setError({ type: 'error', message: result.error || 'Upload failed' })
+          toast?.error(result.error || 'Upload failed')
         }
       } else {
         setUploadStatus("Using mock storage (connect wallet for real 0G)...")
@@ -84,11 +90,13 @@ export const MemoryUpload = () => {
         })
         setUploadedFileHash(result.hash)
         setUploadStatus("Mock upload complete - connect wallet for real 0G storage")
+        toast?.success("Memory stored (mock mode)")
         localStorage.setItem("lastMemoryHash", result.hash)
       }
     } catch (err) {
       console.error('Upload error:', err)
       setError({ type: 'error', message: `Upload failed: ${err.message}` })
+      toast?.error(`Upload failed: ${err.message}`)
     } finally {
       setIsUploading(false)
     }
@@ -345,6 +353,22 @@ export const MemoryUpload = () => {
                 </svg>
                 View on Storage Explorer
               </a>
+            )}
+            
+            {shareLink && (
+              <button 
+                onClick={() => {
+                  navigator.clipboard.writeText(shareLink)
+                  toast?.success("Share link copied!")
+                }}
+                className="share-button"
+                style={{ marginTop: '12px' }}
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13"/>
+                </svg>
+                Copy Share Link
+              </button>
             )}
           </div>
         </div>
