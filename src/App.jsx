@@ -16,6 +16,8 @@ import { Dashboard } from "./components/Dashboard"
 import { PitchDeck } from "./components/Pitch"
 import { initializeSampleData } from "./utils/sampleData"
 import { getNetworkStatus } from "./utils/storageMetrics"
+import WelcomeModal from "./components/Layout/WelcomeModal"
+import { SocialProofSection } from "./components/Layout/SocialProofSection"
 import "./App.css"
 
 initializeSampleData()
@@ -352,6 +354,21 @@ function HomePage() {
           </Link>
         </div>
       </section>
+
+      <SocialProofSection />
+
+      <section className="faucet-section">
+        <div className="faucet-content">
+          <h3>🎮 Hackathon Judges</h3>
+          <p>Get testnet tokens to try all features</p>
+          <a href="https://faucet.0g.ai" target="_blank" rel="noopener noreferrer" className="faucet-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M12 2v20M2 12h20"/>
+            </svg>
+            0G Testnet Faucet
+          </a>
+        </div>
+      </section>
     </main>
   )
 }
@@ -543,6 +560,7 @@ function App() {
       <Router>
         <div className="App">
           <ErrorBoundary>
+            <WelcomeModal />
             <Navigation />
             <Routes>
               <Route path="/" element={<HomePage />} />
