@@ -48,7 +48,7 @@ const simulateNetworkLatency = async (minMs = 500, maxMs = 2000) => {
   await new Promise(resolve => setTimeout(resolve, delay))
 }
 
-export const uploadTo0GStorage = async (dataArray, metadata = {}) => {
+export const uploadToMockStorage = async (dataArray, metadata = {}) => {
   const startTime = Date.now()
   
   await simulateNetworkLatency(800, 2500)
@@ -66,14 +66,15 @@ export const uploadTo0GStorage = async (dataArray, metadata = {}) => {
     size: dataArray.length,
     uploadedAt: new Date().toISOString(),
     confirmations: 1,
-    network: '0G Testnet',
+    network: '0G Testnet (Mock)',
     chunkCount: Math.ceil(dataArray.length / 1024),
     mimeType: metadata.mimeType || 'application/octet-stream',
     encrypted: metadata.encrypted !== false,
     category: metadata.category || 'personal',
     tags: metadata.tags || [],
     title: metadata.title || 'Untitled Memory',
-    userIdentification: metadata.userId || 'anonymous'
+    userIdentification: metadata.userId || 'anonymous',
+    mock: true
   }
 
   try {
@@ -97,7 +98,9 @@ export const uploadTo0GStorage = async (dataArray, metadata = {}) => {
   return storedData
 }
 
-export const downloadFrom0GStorage = async (hash) => {
+export const uploadTo0GStorage = uploadToMockStorage
+
+export const downloadFromMockStorage = async (hash) => {
   const startTime = Date.now()
   
   await simulateNetworkLatency(600, 1800)
@@ -115,7 +118,8 @@ export const downloadFrom0GStorage = async (hash) => {
         downloadTimestamp: Date.now(),
         txHash: record.txHash,
         blockNumber: record.blockNumber,
-        verified: true
+        verified: true,
+        mock: true
       }
     }
   } catch (e) {
@@ -134,24 +138,15 @@ export const downloadFrom0GStorage = async (hash) => {
       downloadTimestamp: Date.now(),
       txHash: memory.txHash,
       blockNumber: memory.blockNumber,
-      verified: true
+      verified: true,
+      mock: true
     }
   }
 
-  const mockContent = new Uint8Array(32)
-  window.crypto.getRandomValues(mockContent)
-  
-  return {
-    hash,
-    content: Array.from(mockContent),
-    size: mockContent.length,
-    downloadedAt: new Date().toISOString(),
-    downloadTimestamp: Date.now(),
-    txHash: generateTransactionHash(),
-    blockNumber: getBlockHeight(),
-    verified: false
-  }
+  return null
 }
+
+export const downloadFrom0GStorage = downloadFromMockStorage
 
 export const verifyStorageProof = async (hash) => {
   await simulateNetworkLatency(400, 1200)
