@@ -90,7 +90,10 @@ export const LegacyBeneficiary = () => {
       <div className="activity-monitor">
         <div className="monitor-header">
           <h4>Dead Man's Switch Status</h4>
-          {getActivityStatus()}
+          <span className={`monitor-status ${getActivityStatus().status}`}>
+            <span className="status-dot"></span>
+            {getActivityStatus().text}
+          </span>
         </div>
         <div className="monitor-body">
           <div className="monitor-item">
