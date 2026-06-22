@@ -11,6 +11,7 @@ import { MediaUpload } from "./components/MediaUpload"
 import { MemoryCollections } from "./components/MemoryCollections"
 import { ParticleField, GlitchText, LiquidGradient } from "./components/Effects"
 import { Web3Provider } from "./contexts/Web3Context"
+import { ToastProvider } from "./components/Layout/Toast"
 import ErrorBoundary from "./components/Layout/ErrorBoundary"
 import { Dashboard } from "./components/Dashboard"
 import { PitchDeck } from "./components/Pitch"
@@ -557,29 +558,31 @@ function Footer() {
 function App() {
   return (
     <Web3Provider>
-      <Router>
-        <div className="App">
-          <ErrorBoundary>
-            <WelcomeModal />
-            <Navigation />
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/memory-vault" element={<MemoryVaultPage />} />
-              <Route path="/ai-companion" element={<AICompanionPage />} />
-              <Route path="/smart-contracts" element={<SmartContractsPage />} />
-              <Route path="/time-capsule" element={<TimeCapsulePage />} />
-              <Route path="/legacy-beneficiary" element={<LegacyPage />} />
-              <Route path="/memory-nft" element={<NFTPage />} />
-              <Route path="/memory-assistant" element={<MemoryAssistantPage />} />
-              <Route path="/media-upload" element={<MediaPage />} />
-              <Route path="/collections" element={<CollectionsPage />} />
-              <Route path="/dashboard" element={<DashboardPage />} />
-              <Route path="/pitch" element={<PitchPage />} />
-            </Routes>
-            <Footer />
-          </ErrorBoundary>
-        </div>
-      </Router>
+      <ToastProvider>
+        <Router>
+          <div className="App">
+            <ErrorBoundary>
+              <WelcomeModal />
+              <Navigation />
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/memory-vault" element={<MemoryVaultPage />} />
+                <Route path="/ai-companion" element={<AICompanionPage />} />
+                <Route path="/smart-contracts" element={<SmartContractsPage />} />
+                <Route path="/time-capsule" element={<TimeCapsulePage />} />
+                <Route path="/legacy-beneficiary" element={<LegacyPage />} />
+                <Route path="/memory-nft" element={<NFTPage />} />
+                <Route path="/memory-assistant" element={<MemoryAssistantPage />} />
+                <Route path="/media-upload" element={<MediaPage />} />
+                <Route path="/collections" element={<CollectionsPage />} />
+                <Route path="/dashboard" element={<DashboardPage />} />
+                <Route path="/pitch" element={<PitchPage />} />
+              </Routes>
+              <Footer />
+            </ErrorBoundary>
+          </div>
+        </Router>
+      </ToastProvider>
     </Web3Provider>
   )
 }
