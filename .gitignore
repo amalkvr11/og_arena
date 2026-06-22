@@ -1,0 +1,122 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Production build
+dist/
+build/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.production
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Testing
+coverage/
+.nyc_output/
+*.lcov
+
+# IDEs and editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*.lnk
+
+# Hardhat
+cache/
+artifacts/
+typechain/
+typechain-types/
+coverage/
+coverage.json
+.coverage_contract/
+
+# Hardhat specific
+hardhat/cache/
+hardhat/artifacts/
+
+# Preserve hardhat source and tests
+!hardhat/contracts/
+!hardhat/scripts/
+!hardhat/test/
+!hardhat/hardhat.config.js
+
+# Temporary files
+*.tmp
+*.temp
+.tmp/
+.temp/
+
+# Debug
+*.log
+debug/
+
+# Build info
+build-info/
+
+# Misc
+*.bak
+*.swp
+*.swo
+
+# Deployment
+.vercel
+.netlify
+
+# Lock files (optional - uncomment if you want to ignore)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# Security - Never commit these
+*.pem
+*.key
+*.p12
+secrets.json
+.secret
+.local/
+.credentials
+
+# Wallet files
+keystore/
+*.keystore
+wallet.json
+
+# Firebase/Supabase
+.firebase/
+.supabase/
