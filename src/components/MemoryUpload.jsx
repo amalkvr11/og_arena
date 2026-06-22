@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { uploadTo0GStorage, downloadFrom0GStorage } from "./0gStorage";
+import { uploadTo0GStorage, downloadFrom0GStorage, verifyStorageProof, getBlockExplorerUrl } from "../utils/storageMetrics";
 
 export const MemoryUpload = () => {
   const [memory, setMemory] = useState("")

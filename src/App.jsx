@@ -10,7 +10,15 @@ import { MemoryAssistant } from "./components/MemoryAssistant"
 import { MediaUpload } from "./components/MediaUpload"
 import { MemoryCollections } from "./components/MemoryCollections"
 import { ParticleField, GlitchText, LiquidGradient } from "./components/Effects"
+import { Web3Provider } from "./contexts/Web3Context"
+import ErrorBoundary from "./components/Layout/ErrorBoundary"
+import { Dashboard } from "./components/Dashboard"
+import { PitchDeck } from "./components/Pitch"
+import { initializeSampleData } from "./utils/sampleData"
+import { getNetworkStatus } from "./utils/storageMetrics"
 import "./App.css"
+
+initializeSampleData()
 
 function Navigation() {
   const location = useLocation()
@@ -28,7 +36,9 @@ function Navigation() {
     { path: "/memory-nft", label: "Memory NFTs", icon: "nft", desc: "Mint memories as NFTs" },
     { path: "/memory-assistant", label: "Memory AI", icon: "assistant", desc: "Semantic memory search" },
     { path: "/media-upload", label: "Multi-Media", icon: "media", desc: "Photos, audio, video" },
-    { path: "/collections", label: "Collections", icon: "collections", desc: "Organize into albums" }
+    { path: "/collections", label: "Collections", icon: "collections", desc: "Organize into albums" },
+    { path: "/dashboard", label: "Dashboard", icon: "dashboard", desc: "Analytics & stats" },
+    { path: "/pitch", label: "Investor Pitch", icon: "pitch", desc: "Business overview" }
   ]
 
   const getIcon = (icon) => {
@@ -140,6 +150,10 @@ function getNavIcon(icon) {
       return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
     case 'collections':
       return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
+    case 'dashboard':
+      return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+    case 'pitch':
+      return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10,9 9,9 8,9"/></svg>
     default:
       return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/></svg>
   }
@@ -468,6 +482,26 @@ function MemoryAssistantPage() {
   )
 }
 
+function DashboardPage() {
+  return (
+    <main className="page-container">
+      <div className="page-content">
+        <Dashboard />
+      </div>
+    </main>
+  )
+}
+
+function PitchPage() {
+  return (
+    <main className="page-container pitch-page">
+      <div className="page-content">
+        <PitchDeck />
+      </div>
+    </main>
+  )
+}
+
 function Footer() {
   return (
     <footer className="app-footer">
@@ -505,24 +539,30 @@ function Footer() {
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <Navigation />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/memory-vault" element={<MemoryVaultPage />} />
-          <Route path="/ai-companion" element={<AICompanionPage />} />
-          <Route path="/smart-contracts" element={<SmartContractsPage />} />
-          <Route path="/time-capsule" element={<TimeCapsulePage />} />
-          <Route path="/legacy-beneficiary" element={<LegacyPage />} />
-          <Route path="/memory-nft" element={<NFTPage />} />
-          <Route path="/memory-assistant" element={<MemoryAssistantPage />} />
-          <Route path="/media-upload" element={<MediaPage />} />
-          <Route path="/collections" element={<CollectionsPage />} />
-        </Routes>
-        <Footer />
-      </div>
-    </Router>
+    <Web3Provider>
+      <Router>
+        <div className="App">
+          <ErrorBoundary>
+            <Navigation />
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/memory-vault" element={<MemoryVaultPage />} />
+              <Route path="/ai-companion" element={<AICompanionPage />} />
+              <Route path="/smart-contracts" element={<SmartContractsPage />} />
+              <Route path="/time-capsule" element={<TimeCapsulePage />} />
+              <Route path="/legacy-beneficiary" element={<LegacyPage />} />
+              <Route path="/memory-nft" element={<NFTPage />} />
+              <Route path="/memory-assistant" element={<MemoryAssistantPage />} />
+              <Route path="/media-upload" element={<MediaPage />} />
+              <Route path="/collections" element={<CollectionsPage />} />
+              <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/pitch" element={<PitchPage />} />
+            </Routes>
+            <Footer />
+          </ErrorBoundary>
+        </div>
+      </Router>
+    </Web3Provider>
   )
 }
 

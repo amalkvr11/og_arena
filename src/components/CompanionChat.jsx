@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react"
+import ReactMarkdown from 'react-markdown'
 
 const NOVA_KNOWLEDGE = {
   soulchain: {
@@ -681,7 +682,9 @@ Type **"help"** for all my capabilities! 🚀`
                 </div>
               )}
               <div className="message-bubble">
-                <p>{msg.text}</p>
+                <div className="message-text">
+                  <ReactMarkdown>{msg.text}</ReactMarkdown>
+                </div>
                 <span className="message-time">{new Date(msg.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
               </div>
             </div>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import { useWeb3 } from "../../contexts/Web3Context"
 
 const MOCK_CONTRACT_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
 const OG_NETWORK = {
@@ -8,41 +9,31 @@ const OG_NETWORK = {
 }
 
 export const ContractInteraction = () => {
+  const { account, isConnected, isConnecting, connectWallet, disconnectWallet, formatAddress, walletType, network } = useWeb3()
   const [contractAddress, setContractAddress] = useState(MOCK_CONTRACT_ADDRESS)
   const [tokenId, setTokenId] = useState("1")
   const [memoryHash, setMemoryHash] = useState("")
   const [isActivating, setIsActivating] = useState(false)
   const [result, setResult] = useState(null)
   const [error, setError] = useState(null)
-  const [walletConnected, setWalletConnected] = useState(false)
-  const [walletAddress, setWalletAddress] = useState("")
-  const [isConnecting, setIsConnecting] = useState(false)
 
   useEffect(() => {
     const savedHash = localStorage.getItem("lastMemoryHash")
     if (savedHash) {
       setMemoryHash(savedHash)
     }
+    
+    const savedTxHash = localStorage.getItem("lastMemoryTxHash")
+    if (savedTxHash && result === null) {
+      setResult({
+        type: "success",
+        message: "Previous transaction found",
+        txHash: savedTxHash,
+        blockNumber: parseInt(localStorage.getItem("lastMemoryBlock") || "0"),
+        gasUsed: 45000
+      })
+    }
   }, [])
-
-  const connectWallet = async () => {
-    setIsConnecting(true)
-    
-    await new Promise(resolve => setTimeout(resolve, 1500))
-    
-    const mockAddress = "0x" + Array.from({length: 40}, () => 
-      Math.floor(Math.random() * 16).toString(16)
-    ).join("")
-    
-    setWalletAddress(mockAddress)
-    setWalletConnected(true)
-    setIsConnecting(false)
-  }
-
-  const disconnectWallet = () => {
-    setWalletConnected(false)
-    setWalletAddress("")
-  }
 
   const handleActivate = async () => {
     if (!contractAddress || !tokenId || !memoryHash) {
@@ -75,9 +66,9 @@ export const ContractInteraction = () => {
   return (
     <div className="contract-interaction">
       <div className="wallet-section">
-        {!walletConnected ? (
+        {!isConnected ? (
           <button 
-            onClick={connectWallet} 
+            onClick={() => connectWallet()} 
             disabled={isConnecting}
             className="connect-wallet-btn"
           >
@@ -105,12 +96,12 @@ export const ContractInteraction = () => {
               </svg>
             </div>
             <div className="wallet-details">
-              <span className="wallet-label">Connected</span>
-              <span className="wallet-address">{walletAddress.slice(0, 6)}...{walletAddress.slice(-4)}</span>
+              <span className="wallet-label">{walletType === 'metamask' ? 'MetaMask' : 'Mock Wallet'}</span>
+              <span className="wallet-address">{formatAddress(account)}</span>
             </div>
             <div className="wallet-network">
               <span className="network-dot"></span>
-              <span>0G Testnet</span>
+              <span>{network?.name || '0G Testnet'}</span>
             </div>
             <button onClick={disconnectWallet} className="disconnect-btn">
               Disconnect
@@ -193,7 +184,7 @@ export const ContractInteraction = () => {
 
         <button 
           onClick={handleActivate}
-          disabled={isActivating || !contractAddress || !tokenId || !memoryHash || !walletConnected}
+          disabled={isActivating || !contractAddress || !tokenId || !memoryHash || !isConnected}
           className="activate-btn"
         >
           {isActivating ? (
@@ -201,7 +192,7 @@ export const ContractInteraction = () => {
               <span className="spinner"></span>
               <span>Activating...</span>
             </>
-          ) : !walletConnected ? (
+          ) : !isConnected ? (
             <>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <rect x="1" y="4" width="22" height="16" rx="2"/>

@@ -54,6 +54,19 @@ SoulChain is a revolutionary platform that allows you to store your most preciou
 | **Memory NFTs** | Mint memories as tradeable NFTs with customizable visibility |
 | **Multi-Media** | Support for images, audio, and video uploads |
 | **Collections** | Organize memories into themed albums |
+| **Dashboard** | Analytics, stats, and activity feed with 0G network status |
+| **Investor Pitch** | Interactive pitch deck for stakeholders |
+
+## New Features (2024 Update)
+
+| Feature | Description |
+|---------|-------------|
+| **Real Wallet Detection** | MetaMask integration with mock wallet fallback |
+| **Network Status Widget** | Real-time 0G network status indicator |
+| **Demo Data** | Pre-loaded sample memories for judges |
+| **Markdown AI Responses** | Rich text formatting in Nova chat |
+| **Error Boundaries** | Graceful error handling throughout |
+| **Loading Skeletons** | Improved loading UX |
 
 ## Tech Stack
 
