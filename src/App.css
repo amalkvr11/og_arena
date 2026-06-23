@@ -39,8 +39,8 @@ html {
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: linear-gradient(180deg, #f0f4ff 0%, #f8f9ff 50%, #ffffff 100%);
-  color: var(--dark);
+  background: var(--gradient-dark);
+  color: var(--light);
   line-height: 1.6;
   min-height: 100vh;
 }
@@ -289,11 +289,12 @@ body {
 }
 
 .page-content {
-  background: white;
+  background: rgba(15, 15, 25, 0.8);
   border-radius: var(--radius-lg);
   padding: 32px;
   box-shadow: var(--shadow-lg);
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
 }
 
 /* ============ HOME PAGE ============ */
@@ -636,7 +637,7 @@ body {
 /* Features Showcase */
 .features-showcase {
   padding: 100px 32px;
-  background: linear-gradient(180deg, #fff 0%, #f8f9ff 100%);
+  background: linear-gradient(180deg, #0a0a0a 0%, #0f0f1a 100%);
 }
 
 .features-grid-full {
@@ -649,22 +650,24 @@ body {
 
 .feature-card-full {
   padding: 40px 32px;
-  background: #fff;
+  background: rgba(20, 20, 35, 0.8);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow);
   transition: all 0.3s ease;
   text-align: center;
-  border: 1px solid var(--light-gray);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
 }
 
 .feature-card-full:hover {
   transform: translateY(-8px);
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-glow);
+  border-color: rgba(0, 102, 255, 0.3);
 }
 
 .feature-card-full.featured {
-  background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%);
-  border-color: rgba(0, 102, 255, 0.2);
+  background: linear-gradient(135deg, rgba(20, 20, 35, 0.9) 0%, rgba(30, 30, 50, 0.9) 100%);
+  border-color: rgba(0, 102, 255, 0.3);
   box-shadow: var(--shadow-glow);
 }
 
@@ -673,18 +676,18 @@ body {
   height: 80px;
   margin: 0 auto 24px;
   padding: 20px;
-  background: linear-gradient(135deg, rgba(0, 102, 255, 0.1), rgba(0, 245, 255, 0.1));
+  background: linear-gradient(135deg, rgba(0, 102, 255, 0.2), rgba(0, 245, 255, 0.2));
   border-radius: var(--radius);
-  color: var(--primary);
+  color: var(--secondary);
 }
 
 .feature-icon-large.purple {
-  background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(0, 245, 255, 0.1));
-  color: var(--accent);
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(0, 245, 255, 0.2));
+  color: var(--accent-light);
 }
 
 .feature-icon-large.green {
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(0, 245, 255, 0.1));
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(0, 245, 255, 0.2));
   color: var(--success);
 }
 
@@ -697,7 +700,7 @@ body {
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 16px;
-  color: var(--dark);
+  color: var(--light);
 }
 
 .feature-card-full p {
@@ -746,7 +749,7 @@ body {
 /* How It Works */
 .how-it-works {
   padding: 100px 32px;
-  background: #fff;
+  background: linear-gradient(180deg, #0a0a0a 0%, #0f0f1a 100%);
 }
 
 .steps-container {
@@ -838,16 +841,18 @@ body {
 .tech-card {
   text-align: center;
   padding: 32px 24px;
-  background: #fff;
+  background: rgba(20, 20, 35, 0.8);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   transition: all 0.3s ease;
-  border: 1px solid var(--light-gray);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
 }
 
 .tech-card:hover {
   transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-glow);
+  border-color: rgba(0, 102, 255, 0.3);
 }
 
 .tech-logo {
@@ -1053,21 +1058,22 @@ body {
   width: 100%;
   min-height: 180px;
   padding: 20px;
-  border: 2px solid var(--light-gray);
+  border: 2px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius);
   font-family: inherit;
   font-size: 1rem;
   resize: vertical;
   transition: all 0.3s ease;
-  background: #fafbfc;
+  background: rgba(15, 15, 25, 0.8);
   line-height: 1.7;
+  color: var(--light);
 }
 
 .memory-textarea:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 4px rgba(0, 102, 255, 0.1);
-  background: white;
+  box-shadow: 0 0 0 4px rgba(0, 102, 255, 0.2);
+  background: rgba(20, 20, 35, 0.9);
 }
 
 .upload-actions {
@@ -1503,9 +1509,9 @@ body {
 }
 
 .ai-message .message-bubble {
-  background: white;
-  color: var(--dark);
-  border: 1px solid var(--light-gray);
+  background: rgba(30, 30, 50, 0.9);
+  color: var(--light);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-bottom-left-radius: 6px;
 }
 
@@ -1716,22 +1722,25 @@ body {
 .form-group label {
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--dark);
+  color: var(--light);
 }
 
 .form-group input {
   padding: 14px 18px;
-  border: 2px solid var(--light-gray);
+  border: 2px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-sm);
   font-family: inherit;
   font-size: 0.95rem;
   transition: all 0.3s ease;
+  background: rgba(15, 15, 25, 0.8);
+  color: var(--light);
 }
 
 .form-group input:focus {
   outline: none;
   border-color: var(--success);
-  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
+  background: rgba(20, 20, 35, 0.9);
 }
 
 .form-row {
@@ -2190,13 +2199,14 @@ body {
 
 .threshold-btn {
   padding: 8px 16px;
-  background: white;
-  border: 1px solid var(--light-gray);
+  background: rgba(30, 30, 50, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 50px;
   font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
+  color: var(--light);
 }
 
 .threshold-btn.active {
@@ -2207,14 +2217,16 @@ body {
 
 .add-beneficiary-section {
   padding: 24px;
-  background: white;
+  background: rgba(20, 20, 35, 0.8);
   border-radius: var(--radius);
-  border: 1px solid var(--light-gray);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
 }
 
 .add-beneficiary-section h4 {
   font-size: 1.1rem;
   margin-bottom: 16px;
+  color: var(--light);
 }
 
 .beneficiary-form {
@@ -2262,9 +2274,10 @@ body {
 
 .beneficiary-card {
   padding: 20px;
-  background: white;
+  background: rgba(20, 20, 35, 0.8);
   border-radius: var(--radius);
-  border: 1px solid var(--light-gray);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
 }
 
 .beneficiary-header {
@@ -2359,16 +2372,19 @@ body {
 }
 
 .modal-content {
-  background: white;
+  background: rgba(20, 20, 35, 0.95);
   padding: 32px;
   border-radius: var(--radius-lg);
   max-width: 400px;
   text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
 }
 
 .modal-content h4 {
   font-size: 1.25rem;
   margin-bottom: 12px;
+  color: var(--light);
 }
 
 .modal-content p {
@@ -2384,11 +2400,12 @@ body {
 
 .cancel-btn {
   padding: 10px 20px;
-  background: var(--light-gray);
+  background: rgba(255, 255, 255, 0.1);
   border: none;
   border-radius: var(--radius-sm);
   font-weight: 600;
   cursor: pointer;
+  color: var(--light);
 }
 
 .confirm-btn {
@@ -2590,16 +2607,17 @@ body {
 }
 
 .nft-card {
-  background: white;
+  background: rgba(20, 20, 35, 0.8);
   border-radius: var(--radius);
-  border: 1px solid var(--light-gray);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   overflow: hidden;
+  backdrop-filter: blur(10px);
 }
 
 .nft-image {
   position: relative;
   aspect-ratio: 1;
-  background: linear-gradient(135deg, #f0f4ff, #f8f9ff);
+  background: linear-gradient(135deg, rgba(0, 102, 255, 0.1), rgba(124, 58, 237, 0.1));
 }
 
 .nft-placeholder {
@@ -2707,16 +2725,17 @@ body {
   align-items: center;
   gap: 8px;
   padding: 16px;
-  background: white;
-  border: 2px solid var(--light-gray);
+  background: rgba(20, 20, 35, 0.8);
+  border: 2px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition: all 0.2s;
+  color: var(--light);
 }
 
 .media-type-btn.active {
   border-color: var(--primary);
-  background: rgba(0, 102, 255, 0.05);
+  background: rgba(0, 102, 255, 0.15);
 }
 
 .media-icon {
@@ -2736,16 +2755,17 @@ body {
 
 .drop-zone {
   padding: 48px 24px;
-  border: 2px dashed var(--light-gray);
+  border: 2px dashed rgba(255, 255, 255, 0.2);
   border-radius: var(--radius);
   text-align: center;
   cursor: pointer;
   transition: all 0.3s;
+  background: rgba(15, 15, 25, 0.5);
 }
 
 .drop-zone:hover {
   border-color: var(--primary);
-  background: rgba(0, 102, 255, 0.05);
+  background: rgba(0, 102, 255, 0.1);
 }
 
 .drop-content {
@@ -2807,15 +2827,16 @@ body {
 }
 
 .gallery-item {
-  background: white;
+  background: rgba(20, 20, 35, 0.8);
   border-radius: var(--radius);
-  border: 1px solid var(--light-gray);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   overflow: hidden;
+  backdrop-filter: blur(10px);
 }
 
 .item-preview {
   aspect-ratio: 16/9;
-  background: #f0f4ff;
+  background: linear-gradient(135deg, rgba(0, 102, 255, 0.1), rgba(124, 58, 237, 0.1));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2926,16 +2947,18 @@ body {
 .collection-card {
   position: relative;
   padding: 20px;
-  background: white;
+  background: rgba(20, 20, 35, 0.8);
   border-radius: var(--radius);
-  border: 1px solid var(--light-gray);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   cursor: pointer;
   transition: all 0.3s;
+  backdrop-filter: blur(10px);
 }
 
 .collection-card:hover {
   transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-glow);
+  border-color: rgba(0, 102, 255, 0.3);
 }
 
 .delete-collection-btn {
@@ -3028,8 +3051,9 @@ body {
   align-items: flex-start;
   gap: 12px;
   padding: 16px;
-  background: white;
+  background: rgba(20, 20, 35, 0.8);
   border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .collab-icon {
@@ -3143,9 +3167,10 @@ body {
   display: flex;
   gap: 16px;
   padding: 16px;
-  background: white;
+  background: rgba(20, 20, 35, 0.8);
   border-radius: var(--radius-sm);
-  border: 1px solid var(--light-gray);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
 }
 
 .memory-date {
@@ -3188,11 +3213,13 @@ body {
 }
 
 .create-modal {
-  background: white;
+  background: rgba(20, 20, 35, 0.95);
   border-radius: var(--radius-lg);
   width: 90%;
   max-width: 500px;
   overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
 }
 
 .modal-header {
@@ -3200,7 +3227,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 20px 24px;
-  border-bottom: 1px solid var(--light-gray);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .modal-header h3 {
@@ -3369,7 +3396,7 @@ body {
 /* More Features Section */
 .more-features {
   padding: 60px 32px;
-  background: #fafbfc;
+  background: linear-gradient(180deg, #0f0f1a 0%, #0a0a0a 100%);
 }
 
 .mini-features-grid {
@@ -3386,17 +3413,19 @@ body {
   align-items: center;
   gap: 12px;
   padding: 24px 16px;
-  background: white;
+  background: rgba(20, 20, 35, 0.8);
   border-radius: var(--radius);
-  border: 1px solid var(--light-gray);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   text-decoration: none;
   color: inherit;
   transition: all 0.3s;
+  backdrop-filter: blur(10px);
 }
 
 .mini-feature:hover {
   transform: translateY(-4px);
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-glow);
+  border-color: rgba(0, 102, 255, 0.3);
 }
 
 .mini-icon {
@@ -3406,6 +3435,7 @@ body {
 .mini-feature h4 {
   font-size: 1rem;
   font-weight: 700;
+  color: var(--light);
 }
 
 .mini-feature p {
@@ -4595,15 +4625,17 @@ body {
 /* Form Section */
 .form-section {
   padding: 24px;
-  background: white;
+  background: rgba(20, 20, 35, 0.8);
   border-radius: var(--radius);
-  border: 1px solid var(--light-gray);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   margin-bottom: 24px;
+  backdrop-filter: blur(10px);
 }
 
 .form-section h4 {
   font-size: 1.1rem;
   margin-bottom: 4px;
+  color: var(--light);
 }
 
 .form-desc {
@@ -6749,6 +6781,7 @@ input.has-value {
 .faucet-content h3 {
   font-size: 1.5rem;
   margin-bottom: 8px;
+  color: var(--light);
 }
 
 .faucet-content p {
@@ -6762,7 +6795,7 @@ input.has-value {
   gap: 8px;
   padding: 14px 32px;
   background: var(--gradient-primary);
-  color: #000;
+  color: #fff;
   text-decoration: none;
   font-weight: 600;
   border-radius: var(--radius-md);
