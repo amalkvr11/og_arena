@@ -29,16 +29,16 @@ export const PitchDeck = () => {
         return (
           <div className="pitch-slide intro-slide">
             <div className="intro-logo">
-              <svg viewBox="0 0 40 40" fill="none">
-                <circle cx="20" cy="20" r="18" stroke="url(#pitchGrad)" strokeWidth="2"/>
-                <path d="M20 8L12 20H28L20 8Z" fill="white"/>
-                <path d="M20 32L12 20H28L20 32Z" fill="white" fillOpacity="0.7"/>
+              <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <defs>
-                  <linearGradient id="pitchGrad" x1="0" y1="0" x2="40" y2="40">
-                    <stop stopColor="#00f5ff"/>
-                    <stop offset="1" stopColor="#0066ff"/>
+                  <linearGradient id="pitchGradUnique" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stopColor="#00f5ff"/>
+                    <stop offset="100%" stopColor="#0066ff"/>
                   </linearGradient>
                 </defs>
+                <circle cx="20" cy="20" r="18" stroke="url(#pitchGradUnique)" strokeWidth="2" fill="none"/>
+                <path d="M20 8L12 20H28L20 8Z" fill="#ffffff"/>
+                <path d="M20 32L12 20H28L20 32Z" fill="#ffffff" fillOpacity="0.7"/>
               </svg>
             </div>
             <h1>{slides[currentSlide].title}</h1>
