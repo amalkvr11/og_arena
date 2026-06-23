@@ -1,0 +1,16 @@
+{
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://evmrpc-testnet.0g.ai https://indexer-storage-testnet-turbo.0g.ai https://api.coingecko.com https://api.openai.com https://api.allorigins.win wss://*.0g.ai; media-src 'self' blob: https:; object-src 'none'; frame-src 'self';"
+        }
+      ]
+    }
+  ]
+}

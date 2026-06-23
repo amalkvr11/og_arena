@@ -25,6 +25,7 @@ export default defineConfig({
     sourcemap: false,
     minify: "esbuild",
     target: "esnext",
+    cssCodeSplit: true,
     rollupOptions: {
       output: {
         manualChunks: {
